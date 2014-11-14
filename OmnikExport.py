@@ -29,6 +29,9 @@ mysql_user      = config.get('mysql','mysql_user')
 mysql_pass      = config.get('mysql','mysql_pass')
 mysql_db        = config.get('mysql','mysql_db')
 
+sqlite_enabled  = config.get('sqlite','sqlite_enabled')
+sqlite_filename = config.get('sqlite','sqlite_filename')
+
 pvout_enabled   = config.getboolean('pvout','pvout_enabled')
 pvout_apikey    = config.get('pvout','pvout_apikey')
 pvout_sysid     = config.get('pvout','pvout_sysid')
@@ -79,7 +82,38 @@ now = datetime.datetime.now()
 if log_enabled:
     logger.info("ID: {0}".format(msg.getID())) 
 
-
+if sqlite_enabled:
+    import sqlite3
+    
+    db_exists = os.path.exists(sqlite_filename)
+    
+    if not db_exists:
+        if log_enabled:
+            logger.error('sqlite database does not exist')
+        sys.exit(1)
+    
+    db = sqlite3.connect(sqlite_filename)
+            
+    cursor = db.cursor()
+    cursor.execute("""INSERT INTO inverter_data 
+        (InvID, timestamp, ETotal, EToday, Temp, HTotal, VPV1, VPV2, VPV3,
+         IPV1, IPV2, IPV3, VAC1, VAC2, VAC3, IAC1, IAC2, IAC3, FAC1, FAC2, 
+         FAC3, PAC1, PAC2, PAC3) 
+        VALUES 
+        (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
+         %s, %s, %s, %s, %s, %s, %s);""", 
+         (msg.getID(), now, msg.getETotal(), 
+          msg.getEToday(), msg.getTemp(), msg.getHTotal(), msg.getVPV(1), 
+          msg.getVPV(2), msg.getVPV(3), msg.getIPV(1), msg.getIPV(2), 
+          msg.getIPV(3), msg.getVAC(1), msg.getVAC(2), msg.getVAC(3), 
+          msg.getIAC(1), msg.getIAC(2), msg.getIAC(3), msg.getFAC(1), 
+          msg.getFAC(2), msg.getFAC(3), msg.getPAC(1), msg.getPAC(2), 
+          msg.getPAC(3)) );
+    
+    db.commit()
+    db.close
+            
+    
 if mysql_enabled:
     # For database output
     import MySQLdb as mdb   
