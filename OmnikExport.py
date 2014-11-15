@@ -97,6 +97,7 @@ if sqlite_enabled:
     cursor = db.cursor()
     
     query = "insert into inverter_data values (\'" + \
+                '' + "\',\'" + \
                 msg.getID() + "\',\'" + \
                 now + "\',\'" + \
                 msg.getETotal() + "\',\'" + \
