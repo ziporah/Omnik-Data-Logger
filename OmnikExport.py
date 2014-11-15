@@ -7,6 +7,7 @@ import datetime             # Used for timestamp
 import sys
 import logging
 import ConfigParser, os
+import time
 
 # For PVoutput 
 import urllib, urllib2
@@ -99,7 +100,7 @@ if sqlite_enabled:
     query = "insert into inverter_data values (\'" + \
                 '' + "\',\'" + \
                 msg.getID() + "\',\'" + \
-                now + "\',\'" + \
+                time.strftime('%Y-%m-%d %H:%M:%S') + "\',\'" + \
                 msg.getETotal() + "\',\'" + \
                 msg.getEToday(), + "\',\'" + \
                 msg.getTemp() + "\',\'" + \
