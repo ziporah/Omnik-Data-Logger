@@ -95,20 +95,35 @@ if sqlite_enabled:
     db = sqlite3.connect(sqlite_filename)
             
     cursor = db.cursor()
-    cursor.execute("""INSERT INTO inverter_data 
-        (InvID, timestamp, ETotal, EToday, Temp, HTotal, VPV1, VPV2, VPV3,
-         IPV1, IPV2, IPV3, VAC1, VAC2, VAC3, IAC1, IAC2, IAC3, FAC1, FAC2, 
-         FAC3, PAC1, PAC2, PAC3) 
-        VALUES 
-        (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
-         %s, %s, %s, %s, %s, %s, %s);""", 
-         (msg.getID(), now, msg.getETotal(), 
-          msg.getEToday(), msg.getTemp(), msg.getHTotal(), msg.getVPV(1), 
-          msg.getVPV(2), msg.getVPV(3), msg.getIPV(1), msg.getIPV(2), 
-          msg.getIPV(3), msg.getVAC(1), msg.getVAC(2), msg.getVAC(3), 
-          msg.getIAC(1), msg.getIAC(2), msg.getIAC(3), msg.getFAC(1), 
-          msg.getFAC(2), msg.getFAC(3), msg.getPAC(1), msg.getPAC(2), 
-          msg.getPAC(3)) );
+    
+    query = "insert into inverter_data values (\'" + \
+                msg.getID() + "\',\'" + \
+                now + "\',\'" + \
+                msg.getETotal() + "\',\'" + \
+                msg.getEToday(), + "\',\'" + \
+                msg.getTemp() + "\',\'" + \
+                msg.getVPV(1), + "\',\'" + \
+                msg.getVPV(2) + "\',\'" + \
+                msg.getVPV(3), + "\',\'" + \
+                msg.getIPV(1) + "\',\'" + \
+                msg.getIPV(2), + "\',\'" + \
+                msg.getIPV(3) + "\',\'" + \
+                msg.getVAC(1), + "\',\'" + \
+                msg.getVAC(2) + "\',\'" + \
+                msg.getVAC(3), + "\',\'" + \
+                msg.getIAC(1), + "\',\'" + \
+                msg.getIAC(2) + "\',\'" + \
+                msg.getIAC(3), + "\',\'" + \
+                msg.getFAC(1), + "\',\'" + \
+                msg.getFAC(2) + "\',\'" + \
+                msg.getFAC(3), + "\',\'" + \
+                msg.getPAC(1), + "\',\'" + \
+                msg.getPAC(2) + "\',\'" + \
+                msg.getPAC(3), + "\',\'" + \
+                config.P1_EQUIPMENT_ID + "\')" 
+    
+    logger.info(query)
+    cursor.execute(query);
     
     db.commit()
     db.close
