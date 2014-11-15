@@ -96,34 +96,34 @@ if sqlite_enabled:
     db = sqlite3.connect(sqlite_filename)
             
     cursor = db.cursor()
-    
-    query = "insert into inverter_data values (\'" + \
-                '' + "\',\'" + \
-                msg.getID() + "\',\'" + \
-                time.strftime('%Y-%m-%d %H:%M:%S') + "\',\'" + \
-                msg.getETotal() + "\',\'" + \
-                msg.getEToday(), + "\',\'" + \
-                msg.getTemp() + "\',\'" + \
-                msg.getVPV(1), + "\',\'" + \
-                msg.getVPV(2) + "\',\'" + \
-                msg.getVPV(3), + "\',\'" + \
-                msg.getIPV(1) + "\',\'" + \
-                msg.getIPV(2), + "\',\'" + \
-                msg.getIPV(3) + "\',\'" + \
-                msg.getVAC(1), + "\',\'" + \
-                msg.getVAC(2) + "\',\'" + \
-                msg.getVAC(3), + "\',\'" + \
-                msg.getIAC(1), + "\',\'" + \
-                msg.getIAC(2) + "\',\'" + \
-                msg.getIAC(3), + "\',\'" + \
-                msg.getFAC(1), + "\',\'" + \
-                msg.getFAC(2) + "\',\'" + \
-                msg.getFAC(3), + "\',\'" + \
-                msg.getPAC(1), + "\',\'" + \
-                msg.getPAC(2) + "\',\'" + \
-                msg.getPAC(3), + "\',\'" + \
-                config.P1_EQUIPMENT_ID + "\')" 
-    
+
+    query = "insert into inverter_data values (NULL " + \
+    ", '" + str(msg.getID()) + \
+    "', '" + time.strftime('%Y-%m-%d %H:%M:%S') + \
+    "', '" + str(msg.getETotal()) + \
+    "', '" + str(msg.getEToday()) + \
+    "', '" + str(msg.getTemp()) + \
+    "', '" + str(msg.getHTotal()) + \
+    "', '" + str(msg.getVPV(1)) + \
+    "', '" + str(msg.getVPV(2)) + \
+    "', '" + str(msg.getVPV(3)) + \
+    "', '" + str(msg.getIPV(1)) + \
+    "', '" + str(msg.getIPV(2)) + \
+    "', '" + str(msg.getIPV(3)) + \
+    "', '" + str(msg.getVAC(1)) + \
+    "', '" + str(msg.getVAC(2)) + \
+    "', '" + str(msg.getVAC(3)) + \
+    "', '" + str(msg.getIAC(1)) + \
+    "', '" + str(msg.getIAC(2)) + \
+    "', '" + str(msg.getIAC(3)) + \
+    "', '" + str(msg.getFAC(1)) + \
+    "', '" + str(msg.getFAC(2)) + \
+    "', '" + str(msg.getFAC(3)) + \
+    "', '" + str(msg.getPAC(1)) + \
+    "', '" + str(msg.getPAC(2)) + \
+    "', '" + str(msg.getPAC(3)) + \
+    "', '" + time.strftime('%Y-%m-%d %H:%M:%S') + "')";
+	
     logger.info(query)
     cursor.execute(query);
     
