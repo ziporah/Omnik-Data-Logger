@@ -4,6 +4,8 @@ import InverterMsg # Import the Msg handler
 import sys, os
 import socket               # Needed for talking to inverter
 import ConfigParser
+import pickle
+import struct
 
 from optparse import OptionParser
 
@@ -27,6 +29,10 @@ wifi_serial     = config.getint('inverter', 'wifi_sn')
 log_enabled     = config.getboolean('log','log_enabled')
 log_filename    = mydir + '/' + config.get('log','log_filename')
 
+graphite_enabled = config.getboolean('graphite','graphite_enabled')
+graphite_host   = config.get('graphite','graphite_host')
+graphite_port   = config.get('graphite','graphite_port')
+graphite_delay   = config.get('graphite','graphite_delay')
 
 # Connect the socket to the port where the server is listening
 server_address = ((ip, port))
